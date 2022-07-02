@@ -56,15 +56,22 @@
                                 </el-table-column>
                                 <el-table-column prop="sales_price" label="Unit Price" width="150">
                                 </el-table-column>
-                                <el-table-column label="Quantity" width="150">
-                                    <el-input type="number" />
+                                <el-table-column label="Quantity" prop="quantity" width="150">
+                                    <template slot-scope="scope">
+                                        <el-input-number v-model="scope.row.quantity" @change="setSelectedProductTotal(scope.$index)" size="small" :min="1" :controls="false"></el-input-number>
+                                    </template>
                                 </el-table-column>
-                                <el-table-column v-model="total_price" label="Total Price" width="150">
+
+                                <el-table-column prop="producPrice" label="Total Price" width="150">
+                                    <template slot-scope="scope">
+                                        <el-input v-model="scope.row.productPrice" :readonly="true"></el-input>
+                                    </template>
                                 </el-table-column>
+
                                 <el-table-column width="150">
                                     <template slot-scope="scope">
-                                        <el-button @click.native.prevent="deleteRow(scope.$index, selectedProducts)" type="text" size="small">
-                                            Remove
+                                        <el-button @click.native.prevent="deleteRow(scope.$index, selectedProducts)" type="text">
+                                            <i class="el-icon-delete"></i>
                                         </el-button>
                                     </template>
                                 </el-table-column>
@@ -136,6 +143,8 @@ export default {
         },
         getSelectedProduct() {
             let selectedProductDetails = this.options.find((s) => s.id === this.onSelectProductValue)
+            selectedProductDetails["quantity"] = 1
+            selectedProductDetails["productPrice"] = selectedProductDetails.sales_price
             this.selectedProducts.push(selectedProductDetails)
         },
         getProducts() {
@@ -151,6 +160,9 @@ export default {
                     console.log("Error fetching product data:", error);
                 });
         },
+        setSelectedProductTotal(index) {
+            console.log(index)
+        },
         goto_list() {
             this.$router.push("/orders");
         },
@@ -163,18 +175,20 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    axios
-                        .post("/backend/createProduct/", this.ruleForm)
-                        .then((response) => {
-                            if (response) {
-                                this.$notify({
-                                    type: "success",
-                                    verticalAlign: "top",
-                                    message: "Product added Successfully",
-                                });
-                                this.goto_list();
-                            }
-                        });
+                    this.ruleForm["orderedProducts"] = this.selectedProducts
+                    console.log(this.ruleForm);
+                    // axios
+                    //     .post("/backend/createProduct/", this.ruleForm)
+                    //     .then((response) => {
+                    //         if (response) {
+                    //             this.$notify({
+                    //                 type: "success",
+                    //                 verticalAlign: "top",
+                    //                 message: "Product added Successfully",
+                    //             });
+                    //             this.goto_list();
+                    //         }
+                    //     });
                 } else {
                     console.log("error submit!!");
                     return false;
