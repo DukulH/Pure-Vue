@@ -76,7 +76,12 @@
                                     </template>
                                 </el-table-column>
                             </el-table>
+                            <div class="d-flex">
+                                    <div class="border" style="width:530px" ><small class="float-end">Sub Total:</small></div>
+                                    <div class="border" style="width:150px"><small class="text-center">200</small></div>
+                                </div>
                         </div>
+
                     </el-tab-pane>
                 </el-tabs>
                 <el-form-item class="mt-5">
@@ -161,15 +166,17 @@ export default {
                 });
         },
         setSelectedProductTotal(id) {
-            let temp  = this.selectedProducts.map((item)=>{
-                if(item.id === id){
-                    return{...item,productPrice : item.sales_price* item.quantity}
-                }
-                else{
+            let temp = this.selectedProducts.map((item) => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        productPrice: item.sales_price * item.quantity
+                    }
+                } else {
                     return item
                 }
             })
-           this.selectedProducts = temp
+            this.selectedProducts = temp
         },
         goto_list() {
             this.$router.push("/orders");
@@ -210,9 +217,9 @@ export default {
     mounted() {
         this.getProducts();
     },
-    watch:{
-        selectedProducts(val){
-            if(val){
+    watch: {
+        selectedProducts(val) {
+            if (val) {
                 console.log(val);
             }
         }
