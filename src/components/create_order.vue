@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-4">
                         <el-form-item label="Contact" prop="contact_number">
-                            <el-input type="number" pattern="[0-9]+" min="0" v-model="ruleForm.contact_number"></el-input>
+                            <el-input type="number" pattern="[0-9]+" min="11" max="11" v-model="ruleForm.contact_number"></el-input>
                         </el-form-item>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                                 </el-table-column>
                                 <el-table-column label="Quantity" prop="quantity" width="150">
                                     <template slot-scope="scope">
-                                        <el-input-number v-model="scope.row.quantity" @change="setSelectedProductTotal(scope.$index)" size="small" :min="1" :controls="false"></el-input-number>
+                                        <el-input-number v-model="scope.row.quantity" @change="setSelectedProductTotal(scope.row.id)" size="small" :min="1" :controls="false"></el-input-number>
                                     </template>
                                 </el-table-column>
 
@@ -118,7 +118,7 @@ export default {
                 }, ],
                 address: [{
                     required: true,
-                    message: "Please insert address)",
+                    message: "Please insert address",
                     trigger: "change",
                 }, ],
             },
@@ -160,8 +160,16 @@ export default {
                     console.log("Error fetching product data:", error);
                 });
         },
-        setSelectedProductTotal(index) {
-            console.log(index)
+        setSelectedProductTotal(id) {
+            let temp  = this.selectedProducts.map((item)=>{
+                if(item.id === id){
+                    return{...item,productPrice : item.sales_price* item.quantity}
+                }
+                else{
+                    return item
+                }
+            })
+           this.selectedProducts = temp
         },
         goto_list() {
             this.$router.push("/orders");
@@ -202,6 +210,13 @@ export default {
     mounted() {
         this.getProducts();
     },
+    watch:{
+        selectedProducts(val){
+            if(val){
+                console.log(val);
+            }
+        }
+    }
 };
 </script> 
 
