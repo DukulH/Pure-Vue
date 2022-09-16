@@ -1,21 +1,19 @@
+<script>
+import Sidebar from "@/components/sidebar/Sidebar.vue";
+import { sidebarWidth } from "@/components/sidebar/state";
+export default {
+  components: { Sidebar },
+  setup() {
+    return { sidebarWidth };
+  },
+};
+</script>
+
 <template>
-  <div id="app">
-    <router-view/>
+  <div id="mainContent" style="top: 0; left: 0">
+    <Sidebar />
+    <div :style="{ 'margin-left': sidebarWidth }">
+      <router-view />
+    </div>
   </div>
 </template>
-
-<style>
-#app {
-  font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  color: #2c3e50;
-}
-
-body{
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-}
-</style>

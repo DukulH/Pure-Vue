@@ -1,5 +1,6 @@
 <template>
 <div class="m-4">
+    <vue-element-loading size="100" :active.sync="show_loader" :is-full-screen="true" spinner="spinner" color="#FF6700" />
     <div class="d-flex justify-content-between">
         <div class="ms-2 mb-3">
             <h3 class="mb-2">Product Create</h3>
@@ -42,8 +43,8 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <el-form-item label="Sales Price" prop="sales_price">
-                            <el-input type="number" min="0" v-model="ruleForm.sales_price"></el-input>
+                        <el-form-item label="Sales Price" prop="unit_price">
+                            <el-input type="number" min="0" v-model="ruleForm.unit_price"></el-input>
                         </el-form-item>
                     </div>
                     <div class="col-6">
@@ -72,18 +73,19 @@ export default {
     name: "CreateProduct",
     data() {
         return {
+            show_loader:false,
             ruleForm: {
                 product_name: "",
                 product_stock: "",
                 product_quantity: "",
-                sales_price: "",
+                unit_price: "",
                 purchase_price: "",
                 desc: "",
             },
             rules: {
                 product_name: [{
                     required: true,
-                    message: "Please input product nam",
+                    message: "Please input product name",
                     trigger: "change",
                 }, ],
                 product_stock: [{
@@ -96,7 +98,7 @@ export default {
                     message: "Please input product quantity in (gm)",
                     trigger: "change",
                 }, ],
-                sales_price: [{
+                unit_price: [{
                     required: true,
                     message: "Please input sales price",
                     trigger: "change",
@@ -115,19 +117,6 @@ export default {
         };
     },
     methods: {
-        onlyNumber(evt) {
-            evt = evt ? evt : window.event;
-            var charCode = evt.which ? evt.which : evt.keyCode;
-            if (
-                charCode > 31 &&
-                (charCode < 48 || charCode > 57) &&
-                charCode !== 46
-            ) {
-                evt.preventDefault();
-            } else {
-                return true;
-            }
-        },
         goto_list() {
             this.$router.push("/products");
         },
@@ -138,14 +127,17 @@ export default {
             this.$router.push("/products");
         },
         submitForm(formName) {
+            this.show_loader = true
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     axios
                         .post("/backend/createProduct/", this.ruleForm)
                         .then((response) => {
+                            this.show_loader=false
                             if (response) {
                                 this.$notify({
                                     type: "success",
+                                    title: "Success",
                                     verticalAlign: "top",
                                     message: "Product added Successfully",
                                 });

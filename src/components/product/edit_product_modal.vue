@@ -107,11 +107,10 @@ export default {
     },
     watch: {
         editProductData(val) {
-            console.log(val)
             this.productData['productName'] = val.product_name
             this.productData['productStock'] = val.product_stock
             this.productData['productQuantity'] = val.product_quantity
-            this.productData['salesPrice'] = parseInt(val.sales_price)
+            this.productData['salesPrice'] = parseInt(val.unit_price)
             this.productData['purchasePrice']= val.purchase_price
             this.productData['description'] =  val.desc
             this.productData["id"] = val.id
@@ -119,22 +118,6 @@ export default {
     },
 
     methods: {
-        onlyNumber(evt) {
-            evt = evt ? evt : window.event;
-            var charCode = evt.which ? evt.which : evt.keyCode;
-            if (
-                charCode > 31 &&
-                (charCode < 48 || charCode > 57) &&
-                charCode !== 46
-            ) {
-                evt.preventDefault();
-            } else {
-                return true;
-            }
-        },
-        goto_list() {
-            this.$router.push("/products");
-        },
         submitForm(formName) {
             const pd_id = this.editProductData.id
             this.productData.productStock = parseInt(this.productData.productStock)
@@ -145,7 +128,7 @@ export default {
                     axios
                         .put(`/backend/updateProduct/${pd_id}/`, this.productData)
                         .then((response) => {
-                            if (response.status === 201) {
+                            if (response.status === 200) {
                                 this.$notify({
                                     type: "success",
                                     verticalAlign: "top",
