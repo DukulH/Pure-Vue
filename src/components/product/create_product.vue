@@ -1,6 +1,10 @@
 <template>
-<div class="m-4">
-    <vue-element-loading size="100" :active.sync="show_loader" :is-full-screen="true" spinner="spinner" color="#FF6700" />
+<div
+    class="m-4"
+    v-loading="loading"
+    :active="show_loader"
+    element-loading-text="Loading..."
+  >
     <div class="d-flex justify-content-between">
         <div class="ms-2 mb-3">
             <h3 class="mb-2">Product Create</h3>
@@ -11,15 +15,11 @@
         </div>
         <div class="me-2 mb-3">
             <el-button-group>
-                <b-button class="me-1" @click="goBackFunction" variant="outline-dark">
-                    <i class="el-icon-back"></i>
-                    Back
-                </b-button>
-                <b-button @click="productListFunction" variant="outline-dark">
-                    <i class="el-icon-tickets"></i>
-                    Product List
-                </b-button>
-            </el-button-group>
+          <el-button @click="goBackFunction" type="info">Back</el-button>
+          <el-button @click="productListFunction" type="info" plain>
+            <i class=""></i> Product List
+          </el-button>
+        </el-button-group>
         </div>
     </div>
     <el-card class="box-card">

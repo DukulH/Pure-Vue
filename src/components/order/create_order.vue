@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/no-deprecated-v-on-native-modifier -->
 <template>
-  <div
+  <div>
+    <Header headerName="Order Create"></Header>
+    <div
     class="m-4"
     v-loading="loading"
     :active="show_loader"
@@ -8,16 +10,15 @@
   >
     <div class="d-flex justify-content-between">
       <div class="ms-2 mb-3">
-        <h3 class="mb-2">Order Create</h3>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>Orders</el-breadcrumb-item>
-          <el-breadcrumb-item>Add Order</el-breadcrumb-item>
+          <el-breadcrumb-item>Create Order</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="me-2 mb-3">
         <el-button-group>
           <el-button @click="goBackFunction" type="info">Back</el-button>
-          <el-button @click="productListFunction" type="info" plain>
+          <el-button @click="orderListFunction" type="info" plain>
             <i class=""></i> Order List
           </el-button>
         </el-button-group>
@@ -188,12 +189,17 @@
       </div>
     </el-card>
   </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
+import Header from "../header/Header.vue"
 export default {
   name: "CreateOrder",
+  components:{
+    Header,
+  },
   data() {
     return {
       show_loader: false,
@@ -311,7 +317,7 @@ export default {
     goBackFunction() {
       this.$router.go(-1);
     },
-    productListFunction() {
+    orderListFunction() {
       this.$router.push("/orders");
     },
     submitForm(formName) {

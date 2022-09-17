@@ -1,18 +1,13 @@
 <template>
   <div class="m-4">
-    <!-- <vue-element-loading :active="isActive" spinner="bar-fade-scale" color="#FF6700"/> -->
     <div class="d-flex justify-content-between">
       <div class="ms-2 mb-3">
         <h3>Product List</h3>
       </div>
       <div class="me-2 mb-3">
-        <b-button
-          @click="$router.push('/products/create')"
-          variant="outline-dark"
+        <el-button @click="$router.push('product/create')" type="info" plain
+          > <i class="fas fa-plus"></i> Add Product</el-button
         >
-          <i class="el-icon-plus"></i>
-          Add Product
-        </b-button>
       </div>
     </div>
 
@@ -37,25 +32,25 @@
           <template v-slot:header="{}">
             <el-input
               v-model="search"
-              size="mini"
+              size="small"
               placeholder="Type to search"
             />
           </template>
           <template v-slot="scope">
             <el-tooltip content="Edit" placement="bottom">
               <el-button
-                size="mini"
+                size="small"
                 id="show-modal"
                 @click="modalData(scope.row)"
-                ><i class="el-icon-edit-outline"></i
+                ><i class="fas fa-pen-to-square"></i
               ></el-button>
             </el-tooltip>
             <el-tooltip content="Delete" placement="bottom">
               <el-button
-                size="mini"
+                size="small"
                 type="danger"
                 @click="handleDelete(scope.row.id)"
-                ><i class="el-icon-delete"></i
+                ><i class="fas fa-trash-can"></i
               ></el-button>
             </el-tooltip>
           </template>

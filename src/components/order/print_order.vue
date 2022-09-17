@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div style="background-color: white;">
+    <Header headerName="Print Order"></Header>
     <div class="text-center mt-4">
       <el-button id="printBtnId" @click="clickToPrint" type="info"
         ><i class="fas fa-print"></i> PRINT</el-button
@@ -91,7 +92,11 @@
 <script>
 import axios from "axios";
 import logo from "../../assets/logo.png";
+import Header from "../header/Header.vue"
 export default {
+  components:{
+    Header
+  },
   data() {
     return {
       orderDataById: {},

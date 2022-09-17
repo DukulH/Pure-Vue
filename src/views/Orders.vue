@@ -1,10 +1,9 @@
 <template>
-  <div class="m-4">
+  <div>
+    <Header headerName="Order List"></Header>
+    <div class="m-4">
     <!-- <vue-element-loading :active="isActive" spinner="bar-fade-scale" color="#FF6700"/> -->
-    <div class="d-flex justify-content-between">
-      <div class="ms-2 mb-3">
-        <h3>Order List</h3>
-      </div>
+    <div class="d-flex justify-content-end">
       <div class="me-2 mb-3">
         <el-button @click="$router.push('order/create')" type="info" plain
           > <i class=""></i> Add Order</el-button
@@ -74,12 +73,17 @@
       </el-table>
     </el-card>
   </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
+import Header from "../components/header/Header.vue"
 export default {
   name: "OrdersView",
+  components:{
+    Header,
+  },
   data() {
     return {
       tableData: [],

@@ -1,12 +1,12 @@
 <template>
   <div class="sidebar" :style="{ width: sidebarWidth }">
-    <h1 style="text-align: center">
+    <h1 style="text-align: center; border-bottom: 1px solid #262626; margin-bottom: 50px;">
       <span v-if="collapsed">
         <div>P</div>
         <div>C</div>
         <div>B</div>
       </span>
-      <span v-else> Pure Care BD </span>
+      <span v-else> P C B</span>
     </h1>
     <SidebarLink to="/dashboard" icon="fas fa-shop">Dashboard</SidebarLink>
     <SidebarLink to="/profile" icon="fas fa-user">Profile</SidebarLink>
@@ -38,7 +38,7 @@ export default {
 
 <style>
 :root {
-  --sidebar-bg-color: black;
+  --sidebar-bg-color: #010101;
   --sidebar-item-hover: gray;
   --sidebar-item-active: gray;
 }

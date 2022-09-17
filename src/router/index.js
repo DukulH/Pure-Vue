@@ -16,11 +16,6 @@ const routes = [
     component: DashboardView,
   },
   {
-    path: "/products",
-    name: "ProductsView",
-    component: ProductView,
-  },
-  {
     path: "/profile",
     name: "ProfileView",
     component: ProfileView,
@@ -40,6 +35,15 @@ const routes = [
   {
     path: "/order/edit/:id",
     component: () => import("../components/order/edit_order.vue"),
+  },
+  {
+    path: "/products",
+    name: "ProductsView",
+    component: ProductView,
+  },
+  {
+    path: '/product/create',
+    component: () => import('../components/product/create_product.vue')
   },
 ];
 

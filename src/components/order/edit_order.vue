@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/no-deprecated-v-on-native-modifier -->
 <template>
-  <div
+  <div>
+    <Header headerName="Update Order"></Header>
+    <div
     class="m-4"
     v-loading="loading"
     :active="show_loader"
@@ -8,7 +10,6 @@
   >
     <div class="d-flex justify-content-between">
       <div class="ms-2 mb-3">
-        <h3 class="mb-2">Update Order</h3>
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>Orders</el-breadcrumb-item>
           <el-breadcrumb-item>Update Order</el-breadcrumb-item>
@@ -188,11 +189,16 @@
       </div>
     </el-card>
   </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
+import Header from "../header/Header.vue"
 export default {
+  components:{
+    Header
+  },
   data() {
     return {
       show_loader: false,
@@ -265,6 +271,9 @@ export default {
     },
   },
   methods: {
+    goBackFunction() {
+      this.$router.go(-1);
+    },
     deleteRow(index, rows) {
       rows.splice(index, 1);
       this.onSelectProductValue = "";
