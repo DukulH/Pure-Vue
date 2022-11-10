@@ -2,86 +2,90 @@
   <div>
     <Header headerName="Order List"></Header>
     <div class="m-4">
-    <!-- <vue-element-loading :active="isActive" spinner="bar-fade-scale" color="#FF6700"/> -->
-    <div class="d-flex justify-content-end">
-      <div class="me-2 mb-3">
-        <el-button @click="$router.push('order/create')" type="info" plain
-          > <i class=""></i> Add Order</el-button
-        >
+      <!-- <vue-element-loading :active="isActive" spinner="bar-fade-scale" color="#FF6700"/> -->
+      <div class="d-flex justify-content-end">
+        <div class="me-2 mb-3">
+          <el-button @click="$router.push('order/create')" type="info" plain>
+            <i class=""></i> Add Order</el-button
+          >
+        </div>
       </div>
-    </div>
 
-    <el-card class="box-card">
-      <el-table
-        empty-text="No Data"
-        :data="
-          tableData.filter(
-            (data) =>
-              !search ||
-              data.customer_name.toLowerCase().includes(search.toLowerCase())
-          )
-        "
-      >
-        <el-table-column label="SN" type="index"> </el-table-column>
-        <el-table-column label="Customer Name" prop="customer_name">
-        </el-table-column>
-        <el-table-column
-          label="Contact"
-          prop="customer_contact"
-        ></el-table-column>
-        <el-table-column label="Address" prop="customer_address">
-        </el-table-column>
-        <el-table-column label="Total Amount" prop="total"></el-table-column>
-        <el-table-column label="Created" prop="created_at"></el-table-column>
-        <el-table-column align="right">
-          <template v-slot:header="{}">
-            <el-input
-              v-model="search"
-              size="small"
-              placeholder="Type to search"
-            />
-          </template>
-          <template v-slot="scope">
-            <el-tooltip content="Edit" placement="bottom">
-              <router-link class="mx-1" :to="`order/edit/${scope.row.id}`">
-                <el-button size="small"
-                  ><i class="fas fa-pen-to-square"></i
+      <el-card class="box-card">
+        <el-table
+          empty-text="No Data"
+          :data="displayData"
+        >
+          <el-table-column label="SN" type="index"> </el-table-column>
+          <el-table-column label="Customer Name" prop="customer_name">
+          </el-table-column>
+          <el-table-column
+            label="Contact"
+            prop="customer_contact"
+          ></el-table-column>
+          <el-table-column label="Address" prop="customer_address">
+          </el-table-column>
+          <el-table-column label="Total Amount" prop="total"></el-table-column>
+          <el-table-column label="Created" prop="created_at"></el-table-column>
+          <el-table-column align="right">
+            <template v-slot:header="{}">
+              <el-input
+                v-model="search"
+                size="large"
+                placeholder="Type to search"
+              />
+            </template>
+            <template v-slot="scope">
+              <el-tooltip content="Edit" placement="bottom">
+                <router-link class="mx-1" :to="`order/edit/${scope.row.id}`">
+                  <el-button size="small"
+                    ><i class="fas fa-pen-to-square"></i
+                  ></el-button>
+                </router-link>
+              </el-tooltip>
+              <el-tooltip content="Print" placement="bottom">
+                <router-link
+                  class="mx-1"
+                  :to="`order/${scope.row.id}`"
+                  target="_blank"
+                >
+                  <el-button size="small" type="info"
+                    ><i class="fas fa-print"></i
+                  ></el-button>
+                </router-link>
+              </el-tooltip>
+              <el-tooltip content="Delete" placement="bottom">
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="handleDelete(scope.row.id)"
+                  ><i class="fas fa-trash-can"></i
                 ></el-button>
-              </router-link>
-            </el-tooltip>
-            <el-tooltip content="Print" placement="bottom">
-              <router-link
-                class="mx-1"
-                :to="`order/${scope.row.id}`"
-                target="_blank"
-              >
-                <el-button size="small" type="info"
-                  ><i class="fas fa-print"></i
-                ></el-button>
-              </router-link>
-            </el-tooltip>
-            <el-tooltip content="Delete" placement="bottom">
-              <el-button
-                size="small"
-                type="danger"
-                @click="handleDelete(scope.row.id)"
-                ><i class="fas fa-trash-can"></i
-              ></el-button>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
-  </div>
+              </el-tooltip>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="d-flex justify-content-end mt-5">
+          <el-pagination
+            class=""
+            :page-size="pageSize"
+            layout="prev, pager, next"
+            @current-change="handleCurrentChange"
+            :total="total"
+          >
+          </el-pagination>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Header from "../components/header/Header.vue"
+import Header from "../components/header/Header.vue";
 export default {
   name: "OrdersView",
-  components:{
+  components: {
     Header,
   },
   data() {
@@ -90,12 +94,38 @@ export default {
       search: "",
       showModal: false,
       editOrderData: {},
+      page: 1,
+      pageSize: 10,
+      total: 0,
     };
   },
   mounted() {
     this.getOrders();
   },
+  computed: {
+    searching() {
+      if (!this.search) {
+        this.total = this.tableData.length;
+        return this.tableData;
+      }
+      this.page = 1;
+      return this.tableData.filter((data) =>
+        data.customer_name.toLowerCase().includes(this.search.toLowerCase()) ||  data.customer_contact.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+    displayData() {
+      this.total = this.searching.length;
+
+      return this.searching.slice(
+        this.pageSize * this.page - this.pageSize,
+        this.pageSize * this.page
+      );
+    },
+  },
   methods: {
+    handleCurrentChange(val) {
+        this.page = val;
+    },
     getOrders() {
       axios
         .get("/backend/order/")

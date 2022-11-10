@@ -1,5 +1,7 @@
 <template>
-<div
+    <div>
+        <Header headerName="Product Create"></Header>
+        <div
     class="m-4"
     v-loading="loading"
     :active="show_loader"
@@ -7,7 +9,6 @@
   >
     <div class="d-flex justify-content-between">
         <div class="ms-2 mb-3">
-            <h3 class="mb-2">Product Create</h3>
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>Products</el-breadcrumb-item>
                 <el-breadcrumb-item>Add Product</el-breadcrumb-item>
@@ -58,19 +59,25 @@
                     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+                    <el-button type="info" style="background-color:#010101;" @click="submitForm('ruleForm')">Create</el-button>
                     <el-button @click="resetForm('ruleForm')">Reset</el-button>
                 </el-form-item>
             </el-form>
         </div>
     </el-card>
 </div>
+    </div>
+
 </template>
 
 <script>
 import axios from "axios";
+import Header from "../header/Header.vue";
 export default {
     name: "CreateProduct",
+    components:{
+        Header,
+    },
     data() {
         return {
             show_loader:false,

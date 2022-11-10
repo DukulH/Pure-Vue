@@ -181,7 +181,7 @@
             </el-tab-pane>
           </el-tabs>
           <el-form-item class="mt-3 text-start">
-            <el-button type="primary" @click="submitForm('ruleForm')"
+            <el-button type="info" style="background-color:#010101" @click="submitForm('ruleForm')"
               >update</el-button
             >
           </el-form-item>

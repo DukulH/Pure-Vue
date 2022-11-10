@@ -3,12 +3,13 @@ import DashboardView from "../views/Dashboard.vue";
 import ProfileView from "../views/Profile.vue";
 import OrderView from "../views/Orders.vue";
 import ProductView from "../views/Products.vue";
+import Login from "../views/Login.vue"
 // import createOrder from "../components/order/create_order.vue";
 
 const routes = [
   {
     path: "/",
-    component: DashboardView,
+    component: Login,
   },
   {
     path: "/dashboard",

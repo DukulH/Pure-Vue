@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar" :style="{ width: sidebarWidth }">
-    <h1 style="text-align: center; border-bottom: 1px solid #262626; margin-bottom: 50px;">
+    <h1 style="text-align: center; border-bottom: 1px solid #262626; margin-bottom: 50px; padding: 20px 0px 20px 0px;">
       <span v-if="collapsed">
         <div>P</div>
         <div>C</div>

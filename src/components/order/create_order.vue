@@ -180,7 +180,7 @@
             </el-tab-pane>
           </el-tabs>
           <el-form-item class="mt-5">
-            <el-button type="primary" @click="submitForm('ruleForm')"
+            <el-button type="info" style="background-color:#010101" @click="submitForm('ruleForm')"
               >Create</el-button
             >
             <el-button @click="resetForm('ruleForm')">Reset</el-button>

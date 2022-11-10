@@ -2,7 +2,7 @@
   <div>
   <Header headerName="Dashboard"></Header>
   <!-- <DashboardCard backgroundColor="red"/> -->
-  <div class="d-flex justify-content-between flex-row mx-5 mt-4">
+  <div class="d-flex justify-content-between flex-row mx-5 mt-5">
     <div style="width: 24%;" v-for="item in cards" :key="item.id">
     <DashboardCard 
         :backgroundColor="item.backgroundColor" 
