@@ -73,6 +73,7 @@
 import axios from "axios";
 import ProductEditModal from "@/components/product/edit_product_modal.vue";
 import Header from "../components/header/Header.vue";
+import authHeader from "../components/authentication/authHeader";
 export default {
   name: "ProductsView",
   components: {
@@ -119,7 +120,7 @@ displayData() {
     },
     getProducts() {
       axios
-        .get("/backend/product/")
+        .get("/backend/product/", {headers: authHeader()})
         .then((response) => {
           this.tableData = response.data;
           this.tableData.map((item) => {

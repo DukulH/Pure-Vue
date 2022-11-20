@@ -5,9 +5,10 @@ export default {
   components: { Sidebar },
 
   setup() {
-    return { 
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    return {
       sidebarWidth,
-      loggedIn: true, 
+      isLoggedIn,
     };
   },
 };
@@ -15,10 +16,7 @@ export default {
 
 <template>
   <div id="mainContent" style="top: 0; left: 0">
-    <div v-if="loggedIn">
-    <router-view />
-    </div>
-    <div v-else>
+    <div v-if="isLoggedIn">
       <Sidebar />
       <div
         :style="{ 'margin-left': sidebarWidth }"
@@ -26,6 +24,9 @@ export default {
       >
         <router-view />
       </div>
+    </div>
+    <div v-else>
+      <router-view />
     </div>
 
     <!-- <el-footer style="height: 95px; background-color: #f8f8f8">

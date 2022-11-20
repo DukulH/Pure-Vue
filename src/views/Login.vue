@@ -15,10 +15,10 @@
         <div class="w-75">
           <h1 class="mb-5 text-center">Pure Care BD</h1>
           <el-form :model="loginForm" :rules="rules" ref="loginForm">
-            <el-form-item label="" prop="email" class="mb-4 w-75 m-auto">
+            <el-form-item label="" prop="username" class="mb-4 w-75 m-auto">
               <el-input
-                placeholder="Enter your email"
-                v-model="loginForm.email"
+                placeholder="Enter your username"
+                v-model="loginForm.username"
               ></el-input>
             </el-form-item>
 
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import AuthService from '../components/authentication/authService';
 export default {
   name: "LoginPage",
   data() {
@@ -68,19 +70,14 @@ export default {
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
       loginForm: {
-        email: "",
+        username: "",
         password: "",
       },
       rules: {
-        email: [
+        username: [
           {
             required: true,
-            message: "Please input email address",
-            trigger: "blur",
-          },
-          {
-            type: "email",
-            message: "Please input correct email address",
+            message: "Please input username",
             trigger: ["blur", "change"],
           },
         ],
@@ -104,7 +101,21 @@ export default {
       this.show_loader = true;
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.loginForm.email);
+          AuthService.login(this.loginForm)
+          .then(response => {
+            if(response.status === 200){
+              this.show_loader = false;
+              this.$router.push('/dashboard')
+            }    
+          }).catch(error => {
+            this.show_loader = false;
+            this.$notify({
+                type: "error",
+                verticalAlign: "top",
+                title: "Error",
+                message: error.data.detail,
+              });
+          })
         } else {
           console.log("error submit!!");
         }
