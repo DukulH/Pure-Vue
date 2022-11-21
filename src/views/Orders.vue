@@ -83,6 +83,7 @@
 <script>
 import axios from "axios";
 import Header from "../components/header/Header.vue";
+import authHeader from "../components/authentication/authHeader";
 export default {
   name: "OrdersView",
   components: {
@@ -128,7 +129,7 @@ export default {
     },
     getOrders() {
       axios
-        .get("/backend/order/")
+        .get("/backend/order/" , {headers: authHeader()})
         .then((response) => {
           this.tableData = response.data;
           this.tableData.map((item) => {
@@ -148,7 +149,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          axios.delete(`/backend/deleteOrder/${id}`).then((response) => {
+          axios.delete(`/backend/deleteOrder/${id}` , {headers: authHeader()}).then((response) => {
             if (response) {
               this.$notify({
                 type: "success",

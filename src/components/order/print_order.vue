@@ -92,7 +92,9 @@
 <script>
 import axios from "axios";
 import logo from "../../assets/logo.png";
-import Header from "../header/Header.vue"
+import Header from "../header/Header.vue";
+import authHeader from "../authentication/authHeader";
+
 export default {
   components:{
     Header
@@ -107,7 +109,7 @@ export default {
     getOrderById() {
       const id = this.$route.params.id;
       axios
-        .get(`/backend/orderByID/${id}/`)
+        .get(`/backend/orderByID/${id}/`, {headers: authHeader()})
         .then((response) => {
           response.data.created_at = new Date(
             response.data.created_at

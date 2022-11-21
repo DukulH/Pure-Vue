@@ -73,6 +73,8 @@
 <script>
 import axios from "axios";
 import Header from "../header/Header.vue";
+import authHeader from "../authentication/authHeader";
+
 export default {
     name: "CreateProduct",
     components:{
@@ -138,7 +140,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     axios
-                        .post("/backend/createProduct/", this.ruleForm)
+                        .post("/backend/createProduct/",{headers: authHeader()}, this.ruleForm)
                         .then((response) => {
                             this.show_loader=false
                             if (response) {

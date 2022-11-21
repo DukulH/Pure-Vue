@@ -194,7 +194,8 @@
 
 <script>
 import axios from "axios";
-import Header from "../header/Header.vue"
+import Header from "../header/Header.vue";
+import authHeader from "../authentication/authHeader";
 export default {
   components:{
     Header
@@ -291,7 +292,7 @@ export default {
     getProducts() {
       this.show_loader = true;
       axios
-        .get("/backend/product/")
+        .get("/backend/product/", {headers: authHeader()} )
         .then((response) => {
           this.show_loader = false;
           this.options = response.data;
@@ -321,7 +322,7 @@ export default {
     getOrderById() {
       const id = this.$route.params.id;
       axios
-        .get(`/backend/orderByID/${id}/`)
+        .get(`/backend/orderByID/${id}/`, {headers: authHeader()})
         .then((response) => {
           this.ruleForm["up_customer_name"] = response.data.customer_name;
           this.ruleForm["up_address"] = response.data.customer_address;
@@ -347,7 +348,7 @@ export default {
             this.ruleForm["orderedProducts"] = this.selectedProducts;
             this.ruleForm["order_id"] = this.order_id;
             axios
-              .put(`/backend/updateOrder/${this.order_id}/`, this.ruleForm)
+              .put(`/backend/updateOrder/${this.order_id}/`,{headers: authHeader()}, this.ruleForm)
               .then((response) => {
                 this.show_loader = false;
                 if (response) {

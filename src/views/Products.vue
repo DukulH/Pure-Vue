@@ -79,7 +79,7 @@ export default {
   components: {
     ProductEditModal,
     Header,
-  },
+},
   data() {
     return {
       tableData: [],
@@ -140,7 +140,7 @@ displayData() {
         type: "warning",
       })
         .then(() => {
-          axios.delete(`/backend/deleteProduct/${id}`).then((response) => {
+          axios.delete(`/backend/deleteProduct/${id}` , {headers: authHeader()}).then((response) => {
             if (response) {
               this.$notify({
                 type: "success",

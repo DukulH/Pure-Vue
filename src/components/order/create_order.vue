@@ -195,6 +195,7 @@
 <script>
 import axios from "axios";
 import Header from "../header/Header.vue"
+import authHeader from "../authentication/authHeader";
 export default {
   name: "CreateOrder",
   components:{
@@ -288,7 +289,7 @@ export default {
     getProducts() {
       this.show_loader = true;
       axios
-        .get("/backend/product/")
+        .get("/backend/product/", {headers: authHeader()})
         .then((response) => {
           this.show_loader = false;
           this.options = response.data;
@@ -327,7 +328,7 @@ export default {
           if (this.selectedProducts.length) {
             this.ruleForm["orderedProducts"] = this.selectedProducts;
             axios
-              .post("/backend/createOrder/", this.ruleForm)
+              .post("/backend/createOrder/" ,{headers: authHeader()}, this.ruleForm)
               .then((response) => {
                 this.show_loader = false;
                 if (response) {

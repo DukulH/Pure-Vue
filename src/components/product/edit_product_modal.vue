@@ -59,6 +59,7 @@
 
 <script>
 import axios from "axios";
+import authHeader from '../authentication/authHeader';
 export default {
     props: ['editProductData', 'show'],
     data() {
@@ -126,7 +127,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     axios
-                        .put(`/backend/updateProduct/${pd_id}/`, this.productData)
+                        .put(`/backend/updateProduct/${pd_id}/`,{headers: authHeader()}, this.productData)
                         .then((response) => {
                             if (response.status === 200) {
                                 this.$notify({
