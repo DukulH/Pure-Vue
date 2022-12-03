@@ -20,14 +20,14 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 axios.interceptors.response.use(
   (response) => {
-    console.log(response);
+    console.log("response===========>",response);
     return response;
   },
   (error) => {
     console.log(error);
     const status = error.response ? error.response.status : null;
-    const status_msg = error.response ? error.response.data.code : null;
-    if (status === 401 && status_msg === "token_not_valid") {
+    const status_msg = error.response ? error.response.statusText : null;
+    if (status === 401 && status_msg === "Unauthorized") {
       if (!isRefreshing) {
         isRefreshing = true;
         return AuthService.refreshToken()

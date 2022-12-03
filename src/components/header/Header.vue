@@ -73,12 +73,14 @@ export default {
 .header {
   color: black;
   background-color: white;
+  
 }
 
 .box {
   position: relative;
   width: 350px;
   z-index: 10;
+  
 }
 
 .dropdown {
@@ -93,7 +95,12 @@ export default {
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
+  overflow: hidden;
 }
+.dropdown.active{
+  overflow: visible;
+}
+
 .dropdown .left-icon,
 .dropdown .right-icon {
   position: relative;

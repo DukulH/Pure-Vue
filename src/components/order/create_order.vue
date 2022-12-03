@@ -293,6 +293,10 @@ export default {
         .then((response) => {
           this.show_loader = false;
           this.options = response.data;
+          this.options.map((item) => {
+            item.product_name =
+              item.product_name + " - " + item.product_quantity;
+          });
         })
         .catch((error) => {
           this.show_loader = false;
@@ -328,7 +332,7 @@ export default {
           if (this.selectedProducts.length) {
             this.ruleForm["orderedProducts"] = this.selectedProducts;
             axios
-              .post("/backend/createOrder/" ,{headers: authHeader()}, this.ruleForm)
+              .post("/backend/createOrder/", this.ruleForm ,{headers: authHeader()})
               .then((response) => {
                 this.show_loader = false;
                 if (response) {

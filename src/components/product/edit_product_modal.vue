@@ -127,7 +127,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     axios
-                        .put(`/backend/updateProduct/${pd_id}/`,{headers: authHeader()}, this.productData)
+                        .put(`/backend/updateProduct/${pd_id}/`, this.productData ,{headers: authHeader()})
                         .then((response) => {
                             if (response.status === 200) {
                                 this.$notify({
