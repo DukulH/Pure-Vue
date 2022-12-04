@@ -1,15 +1,15 @@
 <template>
   <div style="background-color: white;">
     <Header headerName="Print Order"></Header>
-    <div class="text-center mt-4">
+    <div class="text-center mt-4 mb-4">
       <el-button id="printBtnId" @click="clickToPrint" type="info"
         ><i class="fas fa-print"></i> PRINT</el-button
       >
     </div>
-    <div id="PrintContent" class="p-5">
+    <div id="PrintContent"  class="container shadow-sm m-auto p-5 mb-3">
       <section class="d-flex">
         <div class="me-auto ms-2">
-          <h3>Invoice</h3>
+          <h5>Invoice</h5>
           <p>Date: {{ orderDataById.created_at }}</p>
         </div>
         <div class="ms-auto me-3">
@@ -19,28 +19,28 @@
       <section class="d-flex mt-3">
         <div class="pageDetails me-auto ms-2">
           <h6 class="mb-4">Issued By</h6>
-          <h5>
+          <h6>
             <i class="el-icon-shopping-bag-2"></i><strong> Pure Care BD</strong>
-          </h5>
-          <h6><i class="el-icon-phone" /> +8801648904009</h6>
+          </h6>
+          <p><i class="el-icon-phone" /> +8801648904009</p>
         </div>
         <div
           class="customerDetails ms-auto me-2"
           style="width: 32%; text-align: end"
         >
           <h6 class="mb-4">Issued To</h6>
-          <h5><i class="fas fa-user" /> {{ orderDataById.customer_name }}</h5>
-          <h5>
+          <p><i class="fas fa-user" /> {{ orderDataById.customer_name }}</p>
+          <p>
             <i class="fas fa-home" /> {{ orderDataById.customer_address }}
-          </h5>
-          <h5>
+          </p>
+          <p>
             <i class="fas fa-phone" /> {{ orderDataById.customer_contact }}
-          </h5>
+          </p>
         </div>
       </section>
       <section class="p-4">
-        <h4>Ordered Item(s)</h4>
-        <table class="table mt-5">
+        <h6>Ordered Item(s)</h6>
+        <table class="table mt-5" style="font-size: 14px;">
           <thead>
             <tr>
               <th scope="col">Product</th>
@@ -48,7 +48,7 @@
               <th scope="col">Amount</th>
             </tr>
           </thead>
-          <tbody class="h6">
+          <tbody>
             <tr v-for="item in orderDataById.orders" :key="item.id">
               <td>{{ item.product_name }}</td>
               <td>{{ item.quantity }}</td>
