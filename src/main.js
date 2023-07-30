@@ -24,10 +24,11 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(error);
+    console.log("error ===============> ",error);
     const status = error.response ? error.response.status : null;
-    const status_msg = error.response ? error.response.statusText : null;
-    if (status === 401 && status_msg === "Unauthorized") {
+    const status_msg = error.response ? error.response.data.code : null;
+    console.log(status_msg);
+    if (status === 401 && status_msg === "token_not_valid") {
       if (!isRefreshing) {
         isRefreshing = true;
         return AuthService.refreshToken()

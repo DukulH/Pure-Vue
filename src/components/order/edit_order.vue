@@ -3,192 +3,201 @@
   <div>
     <Header headerName="Update Order"></Header>
     <div
-    class="m-4"
-    v-loading="loading"
-    :active="show_loader"
-    element-loading-text="Loading..."
-  >
-    <div class="d-flex justify-content-between">
-      <div class="ms-2 mb-3">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>Orders</el-breadcrumb-item>
-          <el-breadcrumb-item>Update Order</el-breadcrumb-item>
-        </el-breadcrumb>
+      class="m-4"
+      v-loading="loading"
+      :active="show_loader"
+      element-loading-text="Loading..."
+    >
+      <div class="d-flex justify-content-between">
+        <div class="ms-2 mb-3">
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item>Orders</el-breadcrumb-item>
+            <el-breadcrumb-item>Update Order</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
+        <div class="me-2 mb-3">
+          <el-button-group>
+            <el-button @click="goBackFunction" type="info"
+              >Order List</el-button
+            >
+          </el-button-group>
+        </div>
       </div>
-      <div class="me-2 mb-3">
-        <el-button-group>
-          <el-button @click="goBackFunction" type="info">Order List</el-button>
-        </el-button-group>
-      </div>
-    </div>
-    <el-card class="box-card">
-      <div class="w-100 mt-4">
-        <el-form
-          :model="ruleForm"
-          :rules="rules"
-          ref="ruleForm"
-          label-width="120px"
-          class="demo-ruleForm"
-        >
-          <div class="row">
-            <div class="col-6">
-              <el-form-item label="CustomerName" prop="up_customer_name">
-                <el-input v-model="ruleForm.up_customer_name"></el-input>
-              </el-form-item>
-            </div>
-            <div class="col-4">
-              <el-form-item label="Contact" prop="up_contact_number">
-                <el-input
-                  type="number"
-                  pattern="[0-9]+"
-                  v-model="ruleForm.up_contact_number"
-                ></el-input>
-              </el-form-item>
-            </div>
-          </div>
-          <el-form-item class="col-10" label="Address" prop="up_address">
-            <el-input v-model="ruleForm.up_address"></el-input>
-          </el-form-item>
-
-          <el-tabs type="border-card" style="width: 100%">
-            <el-tab-pane label="Select Products">
-              <div style="align: left">
-                <el-select
-                  no-data-text="Empty"
-                  v-model="onSelectProductValue"
-                  @change="getSelectedProduct"
-                  filterable
-                  placeholder="Select"
-                >
-                  <el-option
-                    v-for="item in options"
-                    :key="item.id"
-                    :label="item.product_name"
-                    :value="item.id"
-                  >
-                  </el-option>
-                </el-select>
+      <el-card class="box-card">
+        <div class="w-100 mt-4">
+          <el-form
+            :model="ruleForm"
+            :rules="rules"
+            ref="ruleForm"
+            label-width="120px"
+            class="demo-ruleForm"
+          >
+            <div class="row">
+              <div class="col-6">
+                <el-form-item label="CustomerName" prop="up_customer_name">
+                  <el-input v-model="ruleForm.up_customer_name"></el-input>
+                </el-form-item>
               </div>
-              <div class="mt-4">
-                <el-table
-                  empty-text="No Data"
-                  :data="selectedProducts"
-                  style="width: 100%"
-                >
-                  <el-table-column type="index" label="#" width="50">
-                  </el-table-column>
-                  <el-table-column
-                    prop="product_name"
-                    label="Product Name"
-                    width="200"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    prop="unit_price"
-                    label="Unit Price"
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column label="Quantity" prop="quantity" width="150">
-                    <template v-slot="scope">
-                      <el-input-number
-                        v-model="scope.row.quantity"
-                        @change="setSelectedProductTotal(scope.row.id)"
-                        size="small"
-                        :min="1"
-                        :controls="false"
-                      ></el-input-number>
-                    </template>
-                  </el-table-column>
+              <div class="col-4">
+                <el-form-item label="Contact" prop="up_contact_number">
+                  <el-input
+                    type="number"
+                    pattern="[0-9]+"
+                    v-model="ruleForm.up_contact_number"
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </div>
+            <el-form-item class="col-10" label="Address" prop="up_address">
+              <el-input v-model="ruleForm.up_address"></el-input>
+            </el-form-item>
 
-                  <el-table-column
-                    prop="producPrice"
-                    label="Total Price"
-                    width="150"
+            <el-tabs type="border-card" style="width: 100%">
+              <el-tab-pane label="Select Products">
+                <div style="align: left">
+                  <el-select
+                    no-data-text="Empty"
+                    v-model="onSelectProductValue"
+                    @change="getSelectedProduct"
+                    filterable
+                    placeholder="Select"
                   >
-                    <template v-slot="scope">
-                      <el-input
-                        v-model="scope.row.product_price"
-                        :readonly="true"
-                      ></el-input>
-                    </template>
-                  </el-table-column>
+                    <el-option
+                      v-for="item in options"
+                      :key="item.id"
+                      :label="item.product_name"
+                      :value="item.id"
+                    >
+                    </el-option>
+                  </el-select>
+                </div>
+                <div class="mt-4">
+                  <el-table
+                    empty-text="No Data"
+                    :data="selectedProducts"
+                    style="width: 100%"
+                  >
+                    <el-table-column type="index" label="#" width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="product_name"
+                      label="Product Name"
+                      width="200"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      prop="unit_price"
+                      label="Unit Price"
+                      width="150"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      label="Quantity"
+                      prop="quantity"
+                      width="150"
+                    >
+                      <template v-slot="scope">
+                        <el-input-number
+                          v-model="scope.row.quantity"
+                          @change="setSelectedProductTotal(scope.row.id)"
+                          size="small"
+                          :min="1"
+                          :controls="false"
+                        ></el-input-number>
+                      </template>
+                    </el-table-column>
 
-                  <el-table-column width="150">
-                    <template v-slot="scope">
-                      <el-button
-                        @click.native.prevent="
-                          deleteRow(scope.$index, selectedProducts)
-                        "
-                        type="text"
-                      >
-                        <i class="el-icon-delete"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-                <div v-if="selectedProducts.length">
-                  <div class="d-flex mb-2">
-                    <div style="width: 530px; color: #909399">
-                      <small class="float-end">Sub Total:</small>
+                    <el-table-column
+                      prop="producPrice"
+                      label="Total Price"
+                      width="150"
+                    >
+                      <template v-slot="scope">
+                        <el-input
+                          v-model="scope.row.product_price"
+                          :readonly="true"
+                        ></el-input>
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column width="150">
+                      <template v-slot="scope">
+                        <el-button
+                          @click.native.prevent="
+                            deleteRow(scope.$index, selectedProducts)
+                          "
+                          type="text"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                  <div v-if="selectedProducts.length">
+                    <div class="d-flex mb-2">
+                      <div style="width: 530px; color: #909399">
+                        <small class="float-end">Sub Total:</small>
+                      </div>
+                      <div style="width: 100px; color: #909399">
+                        <small class="float-end">{{ up_sub_total }}/-</small>
+                      </div>
                     </div>
-                    <div style="width: 100px; color: #909399">
-                      <small class="float-end">{{ up_sub_total }}/-</small>
+                    <div class="d-flex mb-2">
+                      <div style="width: 530px; color: #909399">
+                        <small class="float-end">Delivery charge:</small>
+                      </div>
+                      <div class="ms-5" style="width: 100px; color: #909399">
+                        <el-input
+                          type="number"
+                          pattern="[0-9]+"
+                          v-model="ruleForm.up_delivery_charge"
+                          :min="0"
+                          size="mini"
+                          placeholder="Delivery charge"
+                          :controls="false"
+                        ></el-input>
+                      </div>
                     </div>
-                  </div>
-                  <div class="d-flex mb-2">
-                    <div style="width: 530px; color: #909399">
-                      <small class="float-end">Delivery charge:</small>
+                    <div class="d-flex mb-2">
+                      <div style="width: 530px; color: #909399">
+                        <small class="float-end">Disount:</small>
+                      </div>
+                      <div class="ms-5" style="width: 100px; color: #909399">
+                        <el-input
+                          type="number"
+                          pattern="[0-9]+"
+                          size="mini"
+                          :min="0"
+                          placeholder="Disount"
+                          v-model="ruleForm.up_discount"
+                          :controls="false"
+                        ></el-input>
+                      </div>
                     </div>
-                    <div class="ms-5" style="width: 100px; color: #909399">
-                      <el-input
-                        type="number"
-                        pattern="[0-9]+"
-                        v-model="ruleForm.up_delivery_charge"
-                        :min="0"
-                        size="mini"
-                        placeholder="Delivery charge"
-                        :controls="false"
-                      ></el-input>
-                    </div>
-                  </div>
-                  <div class="d-flex mb-2">
-                    <div style="width: 530px; color: #909399">
-                      <small class="float-end">Disount:</small>
-                    </div>
-                    <div class="ms-5" style="width: 100px; color: #909399">
-                      <el-input
-                        type="number"
-                        pattern="[0-9]+"
-                        size="mini"
-                        :min="0"
-                        placeholder="Disount"
-                        v-model="ruleForm.up_discount"
-                        :controls="false"
-                      ></el-input>
-                    </div>
-                  </div>
-                  <div class="d-flex mb-2">
-                    <div style="width: 530px; color: #909399">
-                      <small class="float-end">Total:</small>
-                    </div>
-                    <div style="width: 100px; color: #909399">
-                      <small class="float-end">{{ up_total }}/-</small>
+                    <div class="d-flex mb-2">
+                      <div style="width: 530px; color: #909399">
+                        <small class="float-end">Total:</small>
+                      </div>
+                      <div style="width: 100px; color: #909399">
+                        <small class="float-end">{{ up_total }}/-</small>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </el-tab-pane>
-          </el-tabs>
-          <el-form-item class="mt-3 text-start">
-            <el-button type="info" style="background-color:#010101" @click="submitForm('ruleForm')"
-              >update</el-button
-            >
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-card>
-  </div>
+              </el-tab-pane>
+            </el-tabs>
+            <el-form-item class="mt-3 text-start">
+              <el-button
+                type="info"
+                style="background-color: #010101"
+                @click="submitForm('ruleForm')"
+                >update</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -197,8 +206,8 @@ import axios from "axios";
 import Header from "../header/Header.vue";
 import authHeader from "../authentication/authHeader";
 export default {
-  components:{
-    Header
+  components: {
+    Header,
   },
   data() {
     return {
@@ -292,7 +301,7 @@ export default {
     getProducts() {
       this.show_loader = true;
       axios
-        .get("/backend/product/", {headers: authHeader()} )
+        .get("/backend/product/", { headers: authHeader() })
         .then((response) => {
           this.show_loader = false;
           this.options = response.data;
@@ -322,7 +331,7 @@ export default {
     getOrderById() {
       const id = this.$route.params.id;
       axios
-        .get(`/backend/orderByID/${id}/`, {headers: authHeader()})
+        .get(`/backend/orderByID/${id}/`, { headers: authHeader() })
         .then((response) => {
           this.ruleForm["up_customer_name"] = response.data.customer_name;
           this.ruleForm["up_address"] = response.data.customer_address;
@@ -348,7 +357,9 @@ export default {
             this.ruleForm["orderedProducts"] = this.selectedProducts;
             this.ruleForm["order_id"] = this.order_id;
             axios
-              .put(`/backend/updateOrder/${this.order_id}/`,{headers: authHeader()}, this.ruleForm)
+              .put(`/backend/updateOrder/${this.order_id}/`, this.ruleForm, {
+                headers: authHeader(),
+              })
               .then((response) => {
                 this.show_loader = false;
                 if (response) {
