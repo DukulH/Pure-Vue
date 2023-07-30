@@ -182,6 +182,20 @@
                         <small class="float-end">{{ up_total }}/-</small>
                       </div>
                     </div>
+                    <div class="d-flex align-items-center mb-2">
+                      <div style="width: 80px; color: #909399">
+                        <small class="float-start">Instruction:</small>
+                      </div>
+                      <div style="width: 650px; color: #909399">
+                        <el-input
+                          type="text"
+                          v-model="ruleForm.up_instruction"
+                          size="small"
+                          placeholder="Instruction"
+                          :controls="false"
+                        ></el-input>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </el-tab-pane>
@@ -225,6 +239,7 @@ export default {
         up_delivery_charge: 0,
         up_sub_total: 0,
         up_total: 0,
+        up_instruction:""
       },
       rules: {
         up_customer_name: [
@@ -339,6 +354,7 @@ export default {
         .then((response) => {
           this.ruleForm["up_customer_name"] = response.data.customer_name;
           this.ruleForm["up_address"] = response.data.customer_address;
+          this.ruleForm["up_instruction"] = response.data.instruction;
           this.ruleForm["up_contact_number"] = response.data.customer_contact;
           this.ruleForm["up_discount"] = parseInt(response.data.discount);
           this.ruleForm["up_delivery_charge"] = parseInt(

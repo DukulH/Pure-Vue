@@ -130,6 +130,7 @@
                       </template>
                     </el-table-column>
                   </el-table>
+
                   <div v-if="selectedProducts.length">
                     <div class="d-flex mb-2">
                       <div style="width: 530px; color: #909399">
@@ -179,6 +180,20 @@
                         <small class="float-end">{{ total }}/-</small>
                       </div>
                     </div>
+                    <div class="d-flex align-items-center mb-2">
+                      <div style="width: 80px; color: #909399">
+                        <small class="float-start">Instruction:</small>
+                      </div>
+                      <div style="width: 650px; color: #909399">
+                        <el-input
+                          type="text"
+                          v-model="ruleForm.instruction"
+                          size="small"
+                          placeholder="Instruction"
+                          :controls="false"
+                        ></el-input>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </el-tab-pane>
@@ -223,6 +238,7 @@ export default {
         delivery_charge: 0,
         sub_total: 0,
         total: 0,
+        instruction: "",
       },
       rules: {
         customer_name: [
@@ -355,8 +371,8 @@ export default {
                   this.$refs[formName].resetFields();
                   this.selectedProducts = [];
                   this.onSelectProductValue = "";
-                  this.ruleForm.discount= 0;
-                  this.ruleForm.delivery_charge= 0;
+                  this.ruleForm.discount = 0;
+                  this.ruleForm.delivery_charge = 0;
                 }
               });
           } else {
