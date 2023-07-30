@@ -305,6 +305,10 @@ export default {
         .then((response) => {
           this.show_loader = false;
           this.options = response.data;
+          this.options.map((item) => {
+            item.product_name =
+              item.product_name + " - " + item.product_quantity;
+          });
         })
         .catch((error) => {
           this.show_loader = false;
